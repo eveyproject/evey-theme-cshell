@@ -74,7 +74,7 @@ body {
 
 @keyframes evey-ws-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-/* Header → a command bar. Amber rule, mono, a fake prompt + blinking cursor. */
+/* Header → a command bar. Amber rule, mono, a blinking cursor in the search field. */
 .evey-app-header {
   background: #000;
   border-bottom: 1px solid var(--accent);
@@ -83,29 +83,13 @@ body {
   letter-spacing: 0.04em;
   position: relative;
 }
-/* The prompt sits in the middle of the bar, in the room between the search
-   field and the account buttons; the cursor follows it. Below 1280px that
-   room is gone, so both stay hidden rather than land on the search field. */
-.evey-app-header::before {
-  content: "▸ evey://cshell";
-  display: none;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--accent);
-  font: 600 11px 'Geist Mono', ui-monospace, monospace;
-  letter-spacing: 0.08em;
-  text-shadow: 0 0 6px rgba(255, 184, 77, 0.5);
-  pointer-events: none;
-  opacity: 0.85;
-}
-.evey-app-header::after {
+/* The cursor waits where typing starts: in the empty search field, ahead of
+   the placeholder, which steps aside for it. Once the field is focused or
+   holds text the real caret takes over. */
+.evey-app-header div:has(> input[type="search"]:placeholder-shown:not(:focus))::after {
   content: "█";
-  display: none;
   position: absolute;
-  /* half of the prompt (15 characters, 0.08em apart) plus one space */
-  left: calc(50% + 7.5ch + 0.6em + 1ch);
+  left: 2.25rem;
   top: 50%;
   transform: translateY(-50%);
   color: var(--accent);
@@ -113,10 +97,8 @@ body {
   animation: evey-ws-blink 1.1s steps(1) infinite;
   pointer-events: none;
 }
-@media (min-width: 1280px) {
-  .evey-app-header::before,
-  .evey-app-header::after { display: block; }
-}
+.evey-app-header input[type="search"]:placeholder-shown:not(:focus) { text-indent: 2ch; }
+.evey-app-header input[type="search"] { caret-color: var(--accent); }
 /* The mono face is wider than the default one, the Ctrl+K hint with it: the
    search field keeps its text clear of the hint and ends it with an ellipsis
    when a translation runs long. */
@@ -190,7 +172,7 @@ body {
    ─────────────────────────────────────────────────────────────────────────── */
 [data-sdui-root] {
   position: relative;
-  padding: 2.5rem 0.9rem 2.3rem;
+  padding: 0.9rem;
   font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
   background-color: #060606;
   /* blueprint grid, visible in the gutters between panels */
@@ -198,43 +180,6 @@ body {
     linear-gradient(rgba(255, 184, 77, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 184, 77, 0.045) 1px, transparent 1px);
   background-size: 24px 24px;
-}
-/* boot-log command strip across the top */
-[data-sdui-root]::before {
-  content: "● evey://cshell  ::  system dashboard  ::  live";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1.85rem;
-  display: flex;
-  align-items: center;
-  padding: 0 0.85rem;
-  font: 600 10.5px 'Geist Mono', ui-monospace, monospace;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: linear-gradient(180deg, #000, #0b0b0b);
-  border-bottom: 1px solid var(--accent);
-  text-shadow: 0 0 9px rgba(255, 184, 77, 0.5);
-}
-/* status bar across the bottom */
-[data-sdui-root]::after {
-  content: "READY ▸ landlock=on · seccomp=on · signed";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1.7rem;
-  display: flex;
-  align-items: center;
-  padding: 0 0.85rem;
-  font: 600 9.5px 'Geist Mono', ui-monospace, monospace;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: #040404;
-  border-top: 1px solid #1c1c1c;
 }
 
 /* Each SDUI panel → a framed terminal window: amber top rail, depth, corner tick. */

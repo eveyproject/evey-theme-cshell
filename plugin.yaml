@@ -1,6 +1,6 @@
 name: cshell
 display_name: CShell
 kind: theme
-version: 1.0.0
+version: 1.0.1
 description: "A terminal look for Evey - true black, amber, monospace, scanlines, square corners and terminal chrome, plus a framed dashboard treatment. Shows how far a CSS-only theme can go."
 author: Evey project
