@@ -53,6 +53,15 @@
   --radius-md: 0px;
   --radius-lg: 0px;
   --font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+  /* Poster badges: undefined, they drew as bare text over the picture. */
+  --overlay-bg-strong: rgba(10, 10, 10, 0.88);
+  --badge-imdb-bg: #ffb84d;
+  --badge-res-bg: rgba(10, 10, 10, 0.92);
+  --badge-res-text: #ffb84d;
+  --badge-4k-bg: #ffb84d;
+  --badge-4k-text: #0a0a0a;
+  --badge-hdr-bg: #86efac;
+  --badge-hdr-text: #0a0a0a;
 }
 
 /* CRT scanlines + faint amber vignette on the page background (not an overlay,
@@ -153,6 +162,21 @@ body {
 .evey-media-card {
   font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
   letter-spacing: -0.01em;
+}
+
+/* Resolution and HDR as terminal tags: square, framed, mono. 4K lit amber,
+   HDR in the phosphor green, a plain resolution amber on black. */
+.evey-quality {
+  border-radius: 0 !important;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 8px rgba(255, 184, 77, 0.25) !important;
+  font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+  letter-spacing: 0.04em;
+}
+.evey-quality-hdr { border-left: 1px solid var(--accent); }
+.evey-rating {
+  border-radius: 0 !important;
+  border: 1px solid var(--border);
 }
 
 /* Detail page poster framed in amber. */
